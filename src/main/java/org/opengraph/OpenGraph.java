@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
  */
 public class OpenGraph
 {
+    private String title;
     private String pageUrl;
 	private ArrayList<OpenGraphNamespace> pageNamespaces;
     private Hashtable<String, ArrayList<MetaElement>> metaAttributes;
@@ -183,6 +184,14 @@ public class OpenGraph
         // read the original page url
         URL realURL = siteConnection.getURL();
         pageUrl = realURL.toExternalForm();
+
+        TagNode titleElement = pageData.findElementByName("title", true);
+        if (titleElement != null) {
+            CharSequence possibleTitle = titleElement.getText();
+            if (possibleTitle != null && !possibleTitle.toString().isEmpty()) {
+                this.title = possibleTitle.toString();
+            }
+        }
     }
 
     /**
@@ -404,5 +413,16 @@ public class OpenGraph
     public boolean hasChanged()
 	{
         return hasChanged;
+    }
+
+    /**
+     * Get the title of the page.
+     * <p>Returns the title from OpenGraph. If that one is empty, it will return the title tag.</p>
+     * @return Title of the page
+     */
+    public String getTitle() {
+        String title = getContent("title");
+        if (title != null && !title.isEmpty()) return title;
+        return this.title;
     }
 }
