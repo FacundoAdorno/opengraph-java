@@ -185,9 +185,9 @@ public class OpenGraph
         URL realURL = siteConnection.getURL();
         pageUrl = realURL.toExternalForm();
 
-        TagNode titleElement = pageData.findElementByName("title", true);
+        Elements titleElement = parsedDocument.getElementsByTag("title");
         if (titleElement != null) {
-            CharSequence possibleTitle = titleElement.getText();
+            CharSequence possibleTitle = titleElement.text();
             if (possibleTitle != null && !possibleTitle.toString().isEmpty()) {
                 this.title = possibleTitle.toString();
             }

@@ -3,3 +3,5 @@ bin/*
 testreport/*
 examples/backtothefuture/build/*
 target/*
+.idea
+*.iml
